@@ -4,42 +4,43 @@ import traceback
 from discord.ext import commands
 from os import getenv
 
-intents = discord.Intents.all()
-client = discord.Client(intents=intents)
+intents = discord.Intents.default()
+intents.message_content = True
 
-class ChatGPT:
-    def __init__(self, system_setting):
-        self.system = {"role": "system", "content": system_setting}
-        self.input_list = [self.system]
-        self.logs = []
+bot = commands.Bot(command_prefix='/', intents=intents)
 
-    def input_message(self, input_text):
-        self.input_list.append({"role": "user", "content": input_text})
-        result = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo", messages=self.input_list
-        )
-        self.logs.append(result)
-        self.input_list.append(
-            {"role": "assistant", "content": result.choices[0].message.content}
-        )
-        
-@client.event
-async def on_ready():
-    print("activated")
+messages = [
+    {"role": "system", "content": "You are a helpful assistant."},
+    {"role": "user", "content": "こんにちは。あなたは誰ですか？"},
+    {"role": "assistant", "content": "私は AI アシスタントの AI Qiitan です。なにかお手伝いできることはありますか？"}
+]
 
-@client.event
+@bot.event
+async def on_command_error(ctx, error):
+    orig_error = getattr(error, "original", error)
+    error_msg = ''.join(traceback.TracebackException.from_exception(orig_error).format())
+    await ctx.send(error_msg)
+
+@bot.event
 async def on_message(message):
-    if message.author == client.user:
+    if message.author == bot.user:
         return
     if message.content.startswith('!gpt'):
-        question = message.content[4:]
-        api = ChatGPT(system_setting="You should act as an assistant. Conversation starting now")
-        api.input_message(question)
-        answer = api.input_list[-1]["content"]
-        await message.channel.send(answer)
+        print(message.content)
+        print(message.content.split('>')[1].lstrip())
+        messages.append({"role": "user", "content": message.content.split('>')[1].lstrip()})
 
+        openai_api_key = getenv('OPENAI_API_KEY')
+        openai.api_key = openai_api_key
 
-openai.api_key = getenv('OPENAI_API_TOKEN')
+        completion = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=messages
+        )
+
+        print(completion.choices[0].message.content)
+        await message.channel.send(completion.choices[0].message.content)
+
 token = getenv('DISCORD_BOT_TOKEN')
-client.run(token)
+bot.run(token)
 
