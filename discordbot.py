@@ -9,11 +9,6 @@ intents.message_content = True
 
 bot = commands.Bot(command_prefix='/', intents=intents)
 
-messages = [
-    {"role": "system", "content": "You are a helpful assistant."},
-    {"role": "user", "content": "Hello. Please introduce yourself."},
-    {"role": "assistant", "content": "I am ChatGPT. How can I help you?"}
-]
 
 @bot.event
 async def on_command_error(ctx, error):
@@ -22,7 +17,10 @@ async def on_command_error(ctx, error):
     await ctx.send(error_msg)
 
 
+@bot.command()
+async def ping(ctx):
+    await ctx.send('pong')
+
 
 token = getenv('DISCORD_BOT_TOKEN')
 bot.run(token)
-
