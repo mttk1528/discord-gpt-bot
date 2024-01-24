@@ -30,7 +30,7 @@ async def on_message(message):
         print(message.content.split('>')[1].lstrip())
         messages.append({"role": "user", "content": message.content.split('>')[1].lstrip()})
 
-        openai_api_key = getenv('OPENAI_API_KEY')
+        openai_api_key = getenv('OPENAI_API_TOKEN')
         openai.api_key = openai_api_key
 
         completion = openai.ChatCompletion.create(
