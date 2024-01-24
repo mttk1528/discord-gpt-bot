@@ -11,8 +11,8 @@ bot = commands.Bot(command_prefix='/', intents=intents)
 
 messages = [
     {"role": "system", "content": "You are a helpful assistant."},
-    {"role": "user", "content": "こんにちは。あなたは誰ですか？"},
-    {"role": "assistant", "content": "私は AI アシスタントの AI Qiitan です。なにかお手伝いできることはありますか？"}
+    {"role": "user", "content": "Hello. Please introduce yourself."},
+    {"role": "assistant", "content": "I am ChatGPT. How can I help you?"}
 ]
 
 @bot.event
