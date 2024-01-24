@@ -4,6 +4,11 @@ import traceback
 from discord.ext import commands
 from os import getenv
 
+intents = discord.Intents.default()
+intents.message_content = True
+
+bot = commands.Bot(command_prefix='/', intents=intents)
+
 messages = [
     {"role": "system", "content": "You are a helpful assistant. The AI assistant's name is AI Qiitan."},
     {"role": "user", "content": "こんにちは。あなたは誰ですか？"},
