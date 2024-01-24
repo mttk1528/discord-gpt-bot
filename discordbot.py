@@ -10,9 +10,9 @@ intents.message_content = True
 bot = commands.Bot(command_prefix='/', intents=intents)
 
 messages = [
-    {"role": "system", "content": "You are a helpful assistant. The AI assistant's name is AI Qiitan."},
-    {"role": "user", "content": "こんにちは。あなたは誰ですか？"},
-    {"role": "assistant", "content": "私は AI アシスタントの AI Qiitan です。なにかお手伝いできることはありますか？"}
+    {"role": "system", "content": "Begin interaction with the language model. The assistant is expected to provide informative and accurate responses across a diverse range of topics." },
+    {"role": "user", "content": "What topic are you interested in discussing today?"},
+    {"role": "assistant", "content": "I'm equipped to discuss a wide array of topics. Please feel free to ask about anything from science and technology to arts and philosophy. What's on your mind?"}
 ]
 
 @bot.event
