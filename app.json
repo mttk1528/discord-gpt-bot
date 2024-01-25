@@ -1,6 +1,6 @@
 {
-  "name": "discordpy-startup",
-  "description": "Herokuでdiscord.pyを始めるテンプレート",
-  "repository": "https://github.com/DiscordBotPortalJP/discordpy-startup",
+  "name": "discordpy-gpt-bot",
+  "description": "discord bot of chatgpt",
+  "repository": "https://github.com/mttk1528/discord-gpt-bot",
   "keywords": ["python", "discord", "bot"]
 }
